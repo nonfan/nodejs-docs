@@ -1,7 +1,7 @@
 <div align="center">
     <picture>
-      <source srcset="static/images/readme.svg" media="(prefers-color-scheme: dark)">
-      <source srcset="static/images/readme-dark.svg" media="(prefers-color-scheme: light)">
+      <source srcset="static/images/readme-dark.svg" media="(prefers-color-scheme: dark)">
+      <source srcset="static/images/readme.svg" media="(prefers-color-scheme: light)">
       <img src="static/images/readme.svg" alt="logo">
     </picture>
     <p>
