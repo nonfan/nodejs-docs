@@ -80,6 +80,11 @@ import TabItem from '@theme/TabItem';
     - `flag` 查看文件系统的支持 flags，默认值： `r`。
     - `signal` 允许中止正在进行的 readFile。
 
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
+
+
     ```js title="用法"
     fs.readFileSync(path,option);
     fs.readFile(path,option，callback);
@@ -155,6 +160,11 @@ import TabItem from '@theme/TabItem';
     - `flag` 查看文件系统的支持 flags 。默认值：`w`。
     - `signal` 允许中止正在进行的 writeFile
 
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
+
+
     ```js title="用法"
     fs.writeFileSync(file, data[, options])
     fs.writeFile(file, data[, options], callback)
@@ -226,6 +236,11 @@ import TabItem from '@theme/TabItem';
     - `flag` 查看文件系统的支持 flags 。默认值：`a`。
     - `signal` 允许中止正在进行的 appendFile
 
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
+
+
     ```js title="用法"
     fs.appendFileSync(file, data[, options])
     fs.appendFile(file, data[, options], callback)
@@ -281,6 +296,10 @@ import TabItem from '@theme/TabItem';
     `path`
 
     > 表示文件路径的字符串
+
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
 
     ```js title="用法"
     fs.unlinkSync(path);
