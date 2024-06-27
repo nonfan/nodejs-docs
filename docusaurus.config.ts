@@ -87,12 +87,6 @@ const config: Config = {
         height: 32,
       },
       items: [
-        // {
-        //   type: 'docSidebar',
-        //   position: 'left',
-        //   sidebarId: 'api',
-        //   label: 'API',
-        // },
         {
           href: `https://github.com/${username}/${repository}`,
           label: 'GitHub',
@@ -110,7 +104,7 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       defaultLanguage: 'javascript',
-      additionalLanguages: ['json'],
+      additionalLanguages: ['json', 'bash'],
       magicComments: [
         {
           className: 'theme-code-block-highlighted-line',

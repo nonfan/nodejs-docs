@@ -1,1 +1,209 @@
-# NodeJS
+# 初识 Node.js
+
+## 简介
+
+Node.js® 是一个免费、开源、跨平台的 JavaScript 运行时环境，它让开发人员能够创建服务器、Web 应用、命令行工具和脚本。
+
+Node.js 在浏览器之外运行 [JavaScript V8 引擎](#javascript-v8-引擎) ，这是 Google Chrome 的核心。这使得Node.js具有非常高的性能。
+
+### Node.js 的特点和优势
+
+- **非阻塞 I/O**：Node.js 使用事件驱动和非阻塞 I/O 模型，使其轻量且高效，适合数据密集型的实时应用。
+- **单线程**：Node.js 使用单线程模型，但通过事件循环机制处理并发请求，提升性能。
+- **庞大的生态系统**：Node.js 拥有丰富的 NPM 包管理器，提供大量现成的模块和库供开发者使用。
+
+### Node.js 的应用场景
+
+- 实时应用：如聊天室、在线游戏、实时协作工具等。
+- API 服务：快速构建高性能的 RESTful API 服务。
+- 单页应用：通过 Node.js 进行服务器端渲染，提高应用性能。
+
+## 安装和环境配置
+
+### 安装 Node.js 和 npm
+
+前往Node.js的官方网站下载：[Node.js 官网](https://nodejs.org/zh-cn/download/package-manager)
+
+在官网首页，你会看到两个主要版本：
+
+- **LTS（长期支持）版本**：这个版本是推荐用于生产环境的版本，具有较长的支持周期。
+- **Current（当前）版本**：包含最新的特性和改进，但支持周期较短，适合实验和测试。
+
+### 使用 nvm 管理 Node.js 版本
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="Mac">
+
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+    # 下载并安装 Node.js (可能需要重新启动终端)
+    nvm install 20
+    npm -v
+
+    # 验证 Node.js 版本是否正确
+    node -v # 应该输出 `v20.15.0`
+
+    # 查看所有 Node.js 版本
+    nvm ls
+
+    # 安装其他版本
+    nvm use 18.20.2
+
+    # 切换 Node.js 版本
+    nvm use 18
+    ```
+
+  </TabItem>
+
+  <TabItem value="Windows">
+    从其官方GitHub仓库的发布页面下载最新版本: [nvm安装包](https://github.com/coreybutler/nvm-windows/releases)
+
+    ```bash
+    # 验证 Node.js 版本是否正确
+    node -v # 应该输出 `v20.15.0`
+    npm -v
+
+    # 查看所有 Node.js 版本
+    node ls
+
+    # 安装其他版本
+    nvm use 18.20.2
+
+    # 切换 Node.js 版本
+    nvm use 18
+    ```
+
+    如果 nvm 没有自动配置系统路径，你可能需要手动配置环境变量。将 Node.js 和 npm 的安装路径添加到系统的PATH环境变量中，以便你可以在任何位置运行 node 和 npm 命令。
+
+  </TabItem>
+  <TabItem value="Linux"></TabItem>
+</Tabs>
+
+### 配置环境变量
+
+<Tabs>
+  <TabItem value="Mac">
+    通常情况下，Homebrew 会自动将 Node.js 和 npm 的安装路径添加到环境变量中。你可以通过以下命令检查：
+
+    ```bash
+    echo $PATH
+    ```
+
+    确保 `/usr/local/bin` 在输出中，这是 Homebrew 安装软件的默认位置。
+
+    如果你需要手动添加路径，可以编辑你的 shell 配置文件（例如 ~/.bash_profile 或 ~/.zshrc）并添加以下行：
+
+    ```bash
+    export PATH="/usr/local/bin:$PATH"
+    ```
+
+    保存文件后，在终端中运行以下命令使其生效：
+
+    ```bash
+    source ~/.bash_profile  # 如果使用的是 bash
+    source ~/.zshrc         # 如果使用的是 zsh
+    ```
+
+  </TabItem>
+  <TabItem value="Windows">
+    通常情况下，nvm-windows 会自动配置 Node.js 和 npm 的环境变量。确保以下路径被添加到系统的 PATH 环境变量中：
+
+    - Node.js 安装路径：默认是 C:\Users\YourUsername\AppData\Roaming\nvm\version
+    - npm 全局包安装路径：默认是 C:\Users\YourUsername\AppData\Roaming\npm
+
+    如果需要手动添加或编辑环境变量：
+
+    1. 右键点击 "此电脑"，选择 "属性"。
+    2. 点击 "高级系统设置"。
+    3. 在 "系统属性" 窗口中，点击 "环境变量"。
+    4. 在 "系统变量" 部分，找到 "Path" 变量，双击编辑。
+    5. 在变量值的末尾添加 Node.js 和 npm 的安装路径，多个路径之间使用分号分隔。
+
+      > 例如，添加 C:\Users\YourUsername\AppData\Roaming\nvm\version 和 C:\Users\YourUsername\AppData\Roaming\npm。
+
+    6. 点击 "确定" 保存更改。
+
+  </TabItem>
+  <TabItem value="Linux"></TabItem>
+</Tabs>
+
+## Node.js 命令行工具
+
+### 常用命令
+
+```bash
+# 启动 Node.js REPL
+node
+
+# 运行 JavaScript 文件
+node path/to/your/script.js
+
+# 查看安装的 Node.js 版本
+node --version
+# 简写
+node -v
+
+# 查看 Node.js 的帮助文档
+node --help
+```
+
+### npm 基本用法
+
+```bash
+# 安装依赖包
+npm install <package-name>
+
+# 全局安装 npm 包
+npm install <package-name> -g
+
+# 安装开发依赖包
+npm install --save-dev <package-name>
+
+# 查看安装的 npm 包版本：
+npm list
+
+# 更新 npm 包到最新版本：
+npm update
+
+# 运行脚本命令
+npm run <script-name>
+
+# 查看 npm 的帮助文档
+npm help
+```
+
+## JavaScript V8 引擎
+
+V8 是为 Google Chrome 提供支持的 JavaScript 引擎的名称。它会获取我们的 JavaScript 并在使用 Chrome 浏览时执行它。
+
+V8 是 JavaScript 引擎，即它解析并执行 JavaScript 代码。 DOM 和其他 Web 平台 API（它们都构成运行时环境）由浏览器提供。
+
+最酷的事情是 JavaScript 引擎独立于托管它的浏览器。这一关键特性促成了 Node.js 的崛起。早在 2009 年，V8 就被选为 Node.js 的引擎，随着 Node.js 的爆发式增长，V8 成为现在为大量用 JavaScript 编写的服务器端代码提供支持的引擎。
+
+Node.js 生态系统非常庞大，这要归功于 V8，它还为桌面应用程序提供支持，其中包括 Electron 等项目。
+
+### 其他JS引擎
+
+其他浏览器有自己的 JavaScript 引擎：
+
+- Firefox 浏览器 > OdinMonkey（奥丁猴）
+- Safari 浏览器 > JSCore
+- Edge 浏览器 > Chakra（查克拉）
+
+Edge 最初基于 Chakra，但最近使用 Chromium 和 V8 引擎进行了重建。
+
+所有这些引擎都实现 ECMA ES-262 标准，也称为 ECMAScript，JavaScript 使用的标准。
+
+### 对性能的追求
+
+V8是用C++编写的，并且不断改进。它是便携式的，可以在 Mac、Windows、Linux 和其他几个系统上运行。
+
+在这个 V8 介绍中，我们将忽略 V8 的实现细节：它们可以在更权威的站点（例如 [V8 官方站点](https://v8.dev/)）上找到，并且它们会随着时间的推移而发生变化，通常是根本性的。
+
+> V8 是 Google 的开源高性能 JavaScript 和 WebAssembly 引擎，用 C++ 编写。它用于 Chrome 和 Node.js 等。它实现了 ECMAScript 和 WebAssembly，并在使用 x64、IA-32 或 ARM 处理器的 Windows、macOS 和 Linux 系统上运行。 V8 可以嵌入到任何 C++ 应用程序中。
+
+就像其他 JavaScript 引擎一样，V8 始终在不断发展，以加速 Web 和 Node.js 生态系统的发展。
