@@ -2,7 +2,7 @@
 
 File System（文件系统）模块（通常简称为 fs 模块）是 Node.js 中的一个核心模块，用于处理计算机文件系统的各种操作。它允许你在 Node.js 环境中进行文件的读取、写入、更改、删除等操作，以及与文件和目录进行交互。
 
-所有文件系统操作都具有同步、回调和基于 Promise 的形式，并且可以使用 CommonJS 语法和 ES6 模块 (ESM) 进行访问。
+所有文件系统操作都具有同步、异步回调和基于 Promise 的形式，并且可以使用 CommonJS 语法和 ES6 模块 (ESM) 进行访问。
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -25,9 +25,9 @@ import TabItem from '@theme/TabItem';
     ```
 
   </TabItem>
-  <TabItem value="回调示例">
+  <TabItem value="异步回调示例">
 
-    回调形式将完成回调函数作为其最后一个参数，并异步调用该操作。传递给完成回调的参数取决于方法，但第一个参数始终保留用于异常。如果操作成功完成，则第一个参数是 null 或 undefined 。
+    异步回调形式将完成回调函数作为其最后一个参数，并异步调用该操作。传递给完成回调的参数取决于方法，但第一个参数始终保留用于异常。如果操作成功完成，则第一个参数是 null 或 undefined 。
 
     ```js
     import { unlink } from 'node:fs';
@@ -38,7 +38,7 @@ import TabItem from '@theme/TabItem';
     });
     ```
 
-    当需要最大性能（在执行时间和内存分配方面）时， `node:fs` 模块 API 的基于回调的版本比使用 Promise API 更可取。
+    当需要最大性能（在执行时间和内存分配方面）时， `node:fs` 模块 API 的基于异步回调的版本比使用 Promise API 更可取。
 
   </TabItem>
   <TabItem value="Promise 示例">
@@ -46,6 +46,7 @@ import TabItem from '@theme/TabItem';
     基于 Promise 的操作返回一个 Promise，该 Promise 在异步操作完成时会得到满足。
 
     ```js
+    // default
     import { unlink } from 'node:fs/promises';
 
     try {
@@ -53,6 +54,276 @@ import TabItem from '@theme/TabItem';
       console.log('成功删除 hello.txt');
     } catch (error) {
       console.error('there was an error:', error.message);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## 文件操作
+
+### 读取文件
+
+以同步、异步和基于 Promise 的形式来读取文件的全部内容。
+
+<Tabs>
+  <TabItem value="语法">
+    `path`
+
+     > 表示要读取的文件的路径或文件描述符。类型：`string`（文件路径），`Buffer`，`URL`，或 `integer`（文件描述符）。
+
+    <p className="optional">`option`</p>
+
+    > 对象或字符串，可选参数，指定文件读取的选项。
+
+    - `encoding` 指定编码格式, 输出字符串。默认 `null`。
+    - `flag` 查看文件系统的支持 flags，默认值： `r`。
+    - `signal` 允许中止正在进行的 readFile。
+
+    ```js title="用法"
+    fs.readFileSync(path,option);
+    fs.readFile(path,option，callback);
+    fs.promises.readFile(path,option);
+    ```
+
+  </TabItem>
+  <TabItem value="同步示例">
+
+    ```js
+    import { readFileSync } from "node:fs";
+
+    try {
+      const result = readFileSync("hello.txt", {
+        encoding: "utf-8",
+      });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+
+    ```js
+    import { readFile } from "node:fs";
+
+    readFile("hello.txt", "utf-8", (err, data) => {
+      if (err) throw err;
+      console.log(data);
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="Promise 示例">
+
+    ```js
+    import { readFile } from "node:fs/promises";
+
+    try {
+      const result = await readFile("hello.txt", "utf-8");
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+### 写入文件
+
+`writeFile` 一系列函数以同步、异步和基于 Promise 的形式将数据写入文件。如果文件不存在，它将被创建。若路径包含文件夹，必须提前创建。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `file`
+
+    > 表示文件名或文件描述符的字符串。
+
+    `data`
+
+    > 要写入文件的数据。可以是字符串或缓冲区。
+
+    <p className="optional">`options`</p>
+
+    > 一个可选的对象或字符串，用于指定编码、模式和标志。
+
+    - `encoding` 编码格式，默认 `utf-8`。
+    - `mode` integer 默认值： 0o666。
+    - `flag` 查看文件系统的支持 flags 。默认值：`w`。
+    - `signal` 允许中止正在进行的 writeFile
+
+    ```js title="用法"
+    fs.writeFileSync(file, data[, options])
+    fs.writeFile(file, data[, options], callback)
+    fs.promises.writeFile(file, data[, options])
+    ```
+
+  </TabItem>
+  <TabItem value="同步示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    try {
+      fs.writeFileSync("desc.txt", "新年快乐");
+    } catch (error) {
+      console.log("写入失败", error);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    fs.writeFile("desc.txt", "新年快乐", (err) => {
+      if (err) throw err;
+      console.log("写入成功");
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="Promise 示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    try {
+      await fs.promises.writeFile("desc.txt", "新年快乐");
+    } catch (error) {
+      console.error("写入失败", error);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+### 追加文件
+
+`appendFile` 一系列函数将以同步、异步和基于 Promise 的形式将内容追加到文件，如果文件尚不存在则创建该文件。若路径包含文件夹，必须提前创建。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `file`
+
+    > 表示文件名或文件描述符的字符串。
+
+    `data`
+
+    > 要追加文件的数据。可以是字符串或缓冲区。
+
+    <p className="optional">`options`</p>
+
+    > 一个可选的对象或字符串，用于指定编码、模式和标志。
+
+    - `encoding` 编码格式，默认 `utf-8`。
+    - `mode` integer 默认值： 0o666。
+    - `flag` 查看文件系统的支持 flags 。默认值：`a`。
+    - `signal` 允许中止正在进行的 appendFile
+
+    ```js title="用法"
+    fs.appendFileSync(file, data[, options])
+    fs.appendFile(file, data[, options], callback)
+    fs.promises.appendFile(file, data[, options])
+    ```
+
+  </TabItem>
+  <TabItem value="同步示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    try {
+      fs.appendFileSync("desc.txt", "新年快乐");
+    } catch (error) {
+      console.log("追加失败", error);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    fs.appendFile("desc.txt", "新年快乐", (err) => {
+      if (err) throw err;
+      console.log("追加成功");
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="Promise 示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    try {
+      await fs.promises.appendFile("desc.txt", "新年快乐");
+    } catch (error) {
+      console.error("追加失败", error);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+### 删除文件
+
+<Tabs>
+  <TabItem value="语法">
+
+    `path`
+
+    > 表示文件路径的字符串
+
+    ```js title="用法"
+    fs.unlinkSync(path);
+    fs.unlink(path,callback);
+    fs.promises.unlink(path);
+    ```
+
+  </TabItem>
+  <TabItem value="同步示例">
+
+    ```js
+    import * as fs from "node:fs";
+
+    try {
+      unlinkSync("desc.txt");
+      console.log("成功删除");
+    } catch (err) {
+      console.error(err);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+
+    ```js
+    import * as fs from 'node:fs';
+
+    fs.unlink('desc.txt', (err) => {
+      if (err) throw err;
+      console.log('成功删除');
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="Promise 示例">
+
+    ```js
+    import * as fs from 'node:fs';
+
+    try {
+      await fs.promises.unlink('desc.txt');
+    } catch (error) {
+      console.error('删除失败', error.message);
     }
     ```
 
