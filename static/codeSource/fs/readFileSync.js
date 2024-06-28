@@ -1,0 +1,9 @@
+const fs = require("fs");
+
+try {
+  const result = fs.readFileSync("example.js", "utf-8");
+  console.log("成功读取", result); // 读取成功 Hello World!
+} catch (error) {
+  // 捕获异常
+  console.err("读取失败", error);
+}

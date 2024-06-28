@@ -1,76 +1,55 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeDemo from '../../src/components/CodeDemo.tsx';
+
 # File System 模块
 
 File System（文件系统）模块（通常简称为 fs 模块）是 Node.js 中的一个核心模块，用于处理计算机文件系统的各种操作。它允许你在 Node.js 环境中进行文件的读取、写入、更改、删除等操作，以及与文件和目录进行交互。
 
 所有文件系统操作都具有同步、异步回调和基于 Promise 的形式，并且可以使用 CommonJS 语法和 ES6 模块 (ESM) 进行访问。
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+当需要最大性能（在执行时间和内存分配方面）时， `fs` 模块 API 的异步比使用 Promise API 更可取。
 
 <Tabs>
-  <TabItem value="同步示例">
-
-    同步 API 会阻止 Node.js 事件循环和进一步的 JavaScript 执行，直到操作完成。异常会立即抛出，并可以使用 `try/catch` 进行处理，或者可以允许冒泡。
-
-    ```js
-    import { unlinkSync } from "node:fs";
-
-    try {
-      unlinkSync("hello.txt");
-      console.log("成功删除 hello.txt");
-    } catch (err) {
-      // handle the error
-      console.error(err);
-    }
-    ```
+  <TabItem value="异步示例">
+    异步回调形式将完成回调函数作为其最后一个参数，并异步调用该操作。传递给完成回调的参数取决于方法，但第一个参数始终保留用于异常。如果操作成功完成，则第一个参数是 null 或 undefined 。
+    
+    <CodeDemo filePath="/codeSource/fs/unlink.js"/>
 
   </TabItem>
-  <TabItem value="异步回调示例">
+  <TabItem value="同步示例">
+    同步 API 会阻止 Node.js 事件循环和进一步的 JavaScript 执行，直到操作完成。异常会立即抛出，并可以使用 `try/catch` 进行处理，或者可以允许冒泡。
 
-    异步回调形式将完成回调函数作为其最后一个参数，并异步调用该操作。传递给完成回调的参数取决于方法，但第一个参数始终保留用于异常。如果操作成功完成，则第一个参数是 null 或 undefined 。
-
-    ```js
-    import { unlink } from 'node:fs';
-
-    unlink('hello.txt', (err) => {
-      if (err) throw err;
-      console.log('成功删除 hello.txt');
-    });
-    ```
-
-    当需要最大性能（在执行时间和内存分配方面）时， `node:fs` 模块 API 的基于异步回调的版本比使用 Promise API 更可取。
+    <CodeDemo filePath="/codeSource/fs/unlinkSync.js"/>
 
   </TabItem>
   <TabItem value="Promise 示例">
-
     基于 Promise 的操作返回一个 Promise，该 Promise 在异步操作完成时会得到满足。
 
-    ```js
-    // default
-    import { unlink } from 'node:fs/promises';
-
-    try {
-      await unlink('hello.txt');
-      console.log('成功删除 hello.txt');
-    } catch (error) {
-      console.error('there was an error:', error.message);
-    }
-    ```
+    <CodeDemo filePath="/codeSource/fs/promises.unlink.js"/>
 
   </TabItem>
 </Tabs>
 
 ## 文件操作
 
+下列对文件操作均以 `example.txt` 示例。
+
+<CodeDemo
+  filePath="/codeSource/fs/example.txt"
+  language="txt"
+  title="example.txt"
+/>
+
 ### 读取文件
 
-以同步、异步和基于 Promise 的形式来读取文件的全部内容。
+`fs.readFile` 一系列函数以异步、同步和基于 Promise 的形式来读取文件的全部内容。
 
 <Tabs>
   <TabItem value="语法">
     `path`
 
-     > 表示要读取的文件的路径或文件描述符。类型：`string`（文件路径），`Buffer`，`URL`，或 `integer`（文件描述符）。
+     > 表示要读取的文件的路径或[文件描述符](#文件描述符)。类型：`string`（文件路径），`Buffer`，`URL`，或 `integer`（文件描述符）。
 
     <p className="optional">`option`</p>
 
@@ -82,7 +61,7 @@ import TabItem from '@theme/TabItem';
 
     `callback`
 
-    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
+    > 文件删除操作完成后调用的回调函数。它接受两个参数：`err` 对象，如果操作成功，则该对象为 `null`。`data` 文件内容，以字符串或缓冲区形式返回，根据指定的编码格式。
 
 
     ```js title="用法"
@@ -92,60 +71,27 @@ import TabItem from '@theme/TabItem';
     ```
 
   </TabItem>
-  <TabItem value="同步示例">
-
-    ```js
-    import { readFileSync } from "node:fs";
-
-    try {
-      const result = readFileSync("hello.txt", {
-        encoding: "utf-8",
-      });
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
-    ```
-
-  </TabItem>
   <TabItem value="异步示例">
-
-    ```js
-    import { readFile } from "node:fs";
-
-    readFile("hello.txt", "utf-8", (err, data) => {
-      if (err) throw err;
-      console.log(data);
-    });
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/readFile.js"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/readFileSync.js"/>
   </TabItem>
   <TabItem value="Promise 示例">
-
-    ```js
-    import { readFile } from "node:fs/promises";
-
-    try {
-      const result = await readFile("hello.txt", "utf-8");
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/promises.readFile.js"/>
   </TabItem>
 </Tabs>
 
 ### 写入文件
 
-`writeFile` 一系列函数以同步、异步和基于 Promise 的形式将数据写入文件。如果文件不存在，它将被创建。若路径包含文件夹，必须提前创建。
+`writeFile` 一系列函数以异步、同步和基于 Promise 的形式将数据写入文件。如果文件不存在，它将被创建。如果文件存在，则进行覆盖写入。若路径包含文件夹，必须提前创建。
 
 <Tabs>
   <TabItem value="语法">
 
     `file`
 
-    > 表示文件名或文件描述符的字符串。
+    > 表示文件名或[文件描述符](#文件描述符)的字符串。
 
     `data`
 
@@ -172,56 +118,27 @@ import TabItem from '@theme/TabItem';
     ```
 
   </TabItem>
-  <TabItem value="同步示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    try {
-      fs.writeFileSync("desc.txt", "新年快乐");
-    } catch (error) {
-      console.log("写入失败", error);
-    }
-    ```
-
-  </TabItem>
   <TabItem value="异步示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    fs.writeFile("desc.txt", "新年快乐", (err) => {
-      if (err) throw err;
-      console.log("写入成功");
-    });
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/writeFile.js"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/writeFileSync.js"/>
   </TabItem>
   <TabItem value="Promise 示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    try {
-      await fs.promises.writeFile("desc.txt", "新年快乐");
-    } catch (error) {
-      console.error("写入失败", error);
-    }
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/promises.writeFile.js"/>
   </TabItem>
 </Tabs>
 
 ### 追加文件
 
-`appendFile` 一系列函数将以同步、异步和基于 Promise 的形式将内容追加到文件，如果文件尚不存在则创建该文件。若路径包含文件夹，必须提前创建。
+`appendFile` 一系列函数将以异步、同步和基于 Promise 的形式将内容追加到文件，不覆盖文件内容。如果文件尚不存在则创建该文件。若路径包含文件夹，必须提前创建。
 
 <Tabs>
   <TabItem value="语法">
 
     `file`
 
-    > 表示文件名或文件描述符的字符串。
+    > 表示文件名或 [文件描述符](#文件描述符) 的字符串。
 
     `data`
 
@@ -248,43 +165,14 @@ import TabItem from '@theme/TabItem';
     ```
 
   </TabItem>
-  <TabItem value="同步示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    try {
-      fs.appendFileSync("desc.txt", "新年快乐");
-    } catch (error) {
-      console.log("追加失败", error);
-    }
-    ```
-
-  </TabItem>
   <TabItem value="异步示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    fs.appendFile("desc.txt", "新年快乐", (err) => {
-      if (err) throw err;
-      console.log("追加成功");
-    });
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/appendFile.js"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/appendFileSync.js"/>
   </TabItem>
   <TabItem value="Promise 示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    try {
-      await fs.promises.appendFile("desc.txt", "新年快乐");
-    } catch (error) {
-      console.error("追加失败", error);
-    }
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/promises.appendFile.js"/>
   </TabItem>
 </Tabs>
 
@@ -308,43 +196,83 @@ import TabItem from '@theme/TabItem';
     ```
 
   </TabItem>
-  <TabItem value="同步示例">
-
-    ```js
-    import * as fs from "node:fs";
-
-    try {
-      unlinkSync("desc.txt");
-      console.log("成功删除");
-    } catch (err) {
-      console.error(err);
-    }
-    ```
-
-  </TabItem>
   <TabItem value="异步示例">
-
-    ```js
-    import * as fs from 'node:fs';
-
-    fs.unlink('desc.txt', (err) => {
-      if (err) throw err;
-      console.log('成功删除');
-    });
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/unlink.js"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/unlinkSync.js"/>
   </TabItem>
   <TabItem value="Promise 示例">
-
-    ```js
-    import * as fs from 'node:fs';
-
-    try {
-      await fs.promises.unlink('desc.txt');
-    } catch (error) {
-      console.error('删除失败', error.message);
-    }
-    ```
-
+    <CodeDemo filePath="/codeSource/fs/promises.unlink.js"/>
   </TabItem>
 </Tabs>
+
+## 文件信息
+
+### 获取文件状态信息
+
+`fs.stat` 一系列函数是 Node.js 中用于获取文件或目录信息的函数。它返回一个包含文件信息的 `fs.Stats` 对象。
+
+<Tabs>
+  <TabItem value="语法"></TabItem>
+  <TabItem value="异步示例"></TabItem>
+  <TabItem value="同步示例"></TabItem>
+  <TabItem value="Promise 示例"></TabItem>
+</Tabs>
+
+### 检查文件访问权限
+
+## 其他
+
+### 文件描述符
+
+文件描述符是一个由操作系统分配的整数，用于标识已经打开的文件。每次打开文件时，操作系统都会返回一个唯一的文件描述符。文件描述符可以用来进行文件读写操作。
+
+`fs.readFile` 支持文件描述符，当你打开一个文件时，你可以获取文件描述符，然后使用该描述符来读取文件内容。这通常用于更低级别的文件操作，允许更灵活的控制文件的读取和写入。
+
+```js title="示例"
+import * as fs from 'node:fs';
+
+// 首先，打开文件并获取文件描述符
+fs.open('example.txt', (err, fd) => {
+  if (err) {
+    return console.error('打开文件时出错：', err);
+  }
+
+  // 使用文件描述符读取文件内容
+  fs.readFile(fd, 'utf8', (err, data) => {
+    if (err) {
+      return console.error('读取文件时出错：', err);
+    }
+    console.log('文件内容：', data);
+
+    // 关闭文件
+    fs.close(fd, err => {
+      if (err) {
+        return console.error('关闭文件时出错：', err);
+      }
+    });
+  });
+});
+```
+
+实际上你可以在任何地方使用文件描述符，只要你确保在使用它之前文件已经被正确打开并且在操作完成后正确关闭。
+
+```js
+import * as fs from 'node:fs';
+
+fs.open('example.txt', 'r', (err, fd) => {
+  if (err) {
+    return console.error('打开文件时出错：', err);
+  }
+
+  // 在函数之外调用读取文件的操作
+  readFileByFd(fd);
+});
+
+function readFileByFd(fd) {
+  console.log('文件描述符', fd);
+}
+```
+
+<CodeDemo filePath="/codes.js" />
