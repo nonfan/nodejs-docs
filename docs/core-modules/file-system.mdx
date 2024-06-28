@@ -65,8 +65,8 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
 
     ```js title="用法"
-    fs.readFileSync(path,option);
     fs.readFile(path,option，callback);
+    fs.readFileSync(path,option);
     fs.promises.readFile(path,option);
     ```
 
@@ -112,9 +112,9 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
 
     ```js title="用法"
-    fs.writeFileSync(file, data[, options])
-    fs.writeFile(file, data[, options], callback)
-    fs.promises.writeFile(file, data[, options])
+    fs.writeFile(file, data[, options], callback);
+    fs.writeFileSync(file, data[, options]);
+    fs.promises.writeFile(file, data[, options]);
     ```
 
   </TabItem>
@@ -138,7 +138,7 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
     `file`
 
-    > 表示文件名或 [文件描述符](#文件描述符) 的字符串。
+    > 表示文件名或[文件描述符](#文件描述符)的字符串。
 
     `data`
 
@@ -159,9 +159,9 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
 
     ```js title="用法"
-    fs.appendFileSync(file, data[, options])
-    fs.appendFile(file, data[, options], callback)
-    fs.promises.appendFile(file, data[, options])
+    fs.appendFile(file, data[, options], callback);
+    fs.appendFileSync(file, data[, options]);
+    fs.promises.appendFile(file, data[, options]);
     ```
 
   </TabItem>
@@ -190,8 +190,8 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
     > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`。
 
     ```js title="用法"
-    fs.unlinkSync(path);
     fs.unlink(path,callback);
+    fs.unlinkSync(path);
     fs.promises.unlink(path);
     ```
 
@@ -214,13 +214,88 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 `fs.stat` 一系列函数是 Node.js 中用于获取文件或目录信息的函数。它返回一个包含文件信息的 `fs.Stats` 对象。
 
 <Tabs>
-  <TabItem value="语法"></TabItem>
-  <TabItem value="异步示例"></TabItem>
-  <TabItem value="同步示例"></TabItem>
-  <TabItem value="Promise 示例"></TabItem>
+  <TabItem value="语法">
+    `path`
+
+    > 表示文件路径的字符串、Buffer、URL。
+
+    <p className="optional">`options`</p>
+
+    > 一个可选的对象， `bigint` 属性返回的对象中的数值是否应为 `bigint`。默认值： `false` 。
+
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受两个参数：err 对象，如果操作成功，则该对象为 `null`。其中 stats 是文件信息对象。
+
+    ```js title="用法"
+    fs.stat(path,callback);
+    fs.statSync(path);
+    fs.promises.stat(path);
+    ```
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/stat.txt"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/statSync.txt"/>
+  </TabItem>
+  <TabItem value="Promise 示例">
+    <CodeDemo filePath="/codeSource/fs/promises.stat.txt"/>
+  </TabItem>
 </Tabs>
 
 ### 检查文件访问权限
+
+<Tabs>
+  <TabItem value="语法">
+
+    `path`
+
+    > 表示文件路径的字符串、Buffer、URL。
+
+    <p className="optional">`mode`</p>
+
+    > 默认值：`fs.constants.F_OK`
+
+    - `fs.constants.F_OK`: 检查文件是否存在。
+    - `fs.constants.R_OK`: 检查文件是否可读。
+    - `fs.constants.W_OK`: 检查文件是否可写。
+    - `fs.constants.X_OK`: 检查文件是否可执行。
+
+    `callback`
+
+    > 文件删除操作完成后调用的回调函数。它接受一个参数：err 对象，如果操作成功，则该对象为 `null`，否则返回不可访问文件的原因。
+
+    ```js title="用法"
+    fs.access(path,callback);
+    fs.accessSync(path);
+    fs.promises.access(path);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/access.txt"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/accessSync.txt"/>
+  </TabItem>
+  <TabItem value="Promise 示例">
+    <CodeDemo filePath="/codeSource/fs/promises.access.txt"/>
+  </TabItem>
+</Tabs>
+
+## 文件描述符操作
+
+### 打开文件
+
+### 关闭文件描述符
+
+## 目录操作
+
+### 创建目录
+### 读取目录
+### 删除目录
+### 删除目录（递归删除）s
 
 ## 其他
 
