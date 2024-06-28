@@ -2,7 +2,6 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import rehypeKatex from 'rehype-katex';
-import * as path from 'path';
 
 import {
   username,
@@ -18,24 +17,17 @@ const config: Config = {
   title,
   favicon,
   trailingSlash: true,
-
   url: `https://${username}.github.io/`,
   baseUrl: `/${repository}`,
-
-  // GitHub部署配置
   organizationName: username,
   projectName: repository,
   deploymentBranch: 'gh-pages',
-
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-
   markdown: {
     mermaid: true,
   },
-
   themes: ['@docusaurus/theme-mermaid'],
-
   i18n: {
     defaultLocale: 'zh-CN',
     locales: ['zh-CN'],
@@ -139,24 +131,6 @@ const config: Config = {
         crossorigin: 'anonymous',
       },
     ],
-    webpack: (config, { isServer, webpack }) => {
-      // 定义静态文件目录
-      const staticDir = path.resolve(__dirname, 'static');
-
-      // 修改 webpack 配置
-      config.module.rules.forEach(rule => {
-        // 检查是否是处理 JavaScript 文件的规则
-        if (rule.test && rule.test.toString().includes('js')) {
-          // 排除 static 目录下的 js 文件
-          rule.exclude = [
-            ...(rule.exclude || []),
-            path.join(staticDir, '*.js'), // 排除 static 目录下的所有 js 文件
-          ];
-        }
-      });
-
-      return config;
-    },
   } satisfies Preset.ThemeConfig,
 };
 

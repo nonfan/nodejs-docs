@@ -14,19 +14,19 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
   <TabItem value="异步示例">
     异步回调形式将完成回调函数作为其最后一个参数，并异步调用该操作。传递给完成回调的参数取决于方法，但第一个参数始终保留用于异常。如果操作成功完成，则第一个参数是 null 或 undefined 。
     
-    <CodeDemo filePath="/codeSource/fs/unlink.js"/>
+    <CodeDemo filePath="/codeSource/fs/unlink.txt"/>
 
   </TabItem>
   <TabItem value="同步示例">
     同步 API 会阻止 Node.js 事件循环和进一步的 JavaScript 执行，直到操作完成。异常会立即抛出，并可以使用 `try/catch` 进行处理，或者可以允许冒泡。
 
-    <CodeDemo filePath="/codeSource/fs/unlinkSync.js"/>
+    <CodeDemo filePath="/codeSource/fs/unlinkSync.txt"/>
 
   </TabItem>
   <TabItem value="Promise 示例">
     基于 Promise 的操作返回一个 Promise，该 Promise 在异步操作完成时会得到满足。
 
-    <CodeDemo filePath="/codeSource/fs/promises.unlink.js"/>
+    <CodeDemo filePath="/codeSource/fs/promises.unlink.txt"/>
 
   </TabItem>
 </Tabs>
@@ -72,13 +72,13 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
   </TabItem>
   <TabItem value="异步示例">
-    <CodeDemo filePath="/codeSource/fs/readFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/readFile.txt"/>
   </TabItem>
   <TabItem value="同步示例">
-    <CodeDemo filePath="/codeSource/fs/readFileSync.js"/>
+    <CodeDemo filePath="/codeSource/fs/readFileSync.txt"/>
   </TabItem>
   <TabItem value="Promise 示例">
-    <CodeDemo filePath="/codeSource/fs/promises.readFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/promises.readFile.txt"/>
   </TabItem>
 </Tabs>
 
@@ -119,13 +119,13 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
   </TabItem>
   <TabItem value="异步示例">
-    <CodeDemo filePath="/codeSource/fs/writeFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/writeFile.txt"/>
   </TabItem>
   <TabItem value="同步示例">
-    <CodeDemo filePath="/codeSource/fs/writeFileSync.js"/>
+    <CodeDemo filePath="/codeSource/fs/writeFileSync.txt"/>
   </TabItem>
   <TabItem value="Promise 示例">
-    <CodeDemo filePath="/codeSource/fs/promises.writeFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/promises.writeFile.txt"/>
   </TabItem>
 </Tabs>
 
@@ -166,13 +166,13 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
   </TabItem>
   <TabItem value="异步示例">
-    <CodeDemo filePath="/codeSource/fs/appendFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/appendFile.txt"/>
   </TabItem>
   <TabItem value="同步示例">
-    <CodeDemo filePath="/codeSource/fs/appendFileSync.js"/>
+    <CodeDemo filePath="/codeSource/fs/appendFileSync.txt"/>
   </TabItem>
   <TabItem value="Promise 示例">
-    <CodeDemo filePath="/codeSource/fs/promises.appendFile.js"/>
+    <CodeDemo filePath="/codeSource/fs/promises.appendFile.txt"/>
   </TabItem>
 </Tabs>
 
@@ -197,13 +197,13 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 
   </TabItem>
   <TabItem value="异步示例">
-    <CodeDemo filePath="/codeSource/fs/unlink.js"/>
+    <CodeDemo filePath="/codeSource/fs/unlink.txt"/>
   </TabItem>
   <TabItem value="同步示例">
-    <CodeDemo filePath="/codeSource/fs/unlinkSync.js"/>
+    <CodeDemo filePath="/codeSource/fs/unlinkSync.txt"/>
   </TabItem>
   <TabItem value="Promise 示例">
-    <CodeDemo filePath="/codeSource/fs/promises.unlink.js"/>
+    <CodeDemo filePath="/codeSource/fs/promises.unlink.txt"/>
   </TabItem>
 </Tabs>
 
@@ -274,5 +274,3 @@ function readFileByFd(fd) {
   console.log('文件描述符', fd);
 }
 ```
-
-<CodeDemo filePath="/codes.js" />
