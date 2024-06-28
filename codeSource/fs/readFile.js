@@ -1,0 +1,1 @@
+const fs=require("fs");fs.readFile("example.txt","utf-8",((e,r)=>{if(e)return console.error("\u8bfb\u53d6\u5931\u8d25",e);console.log("\u8bfb\u53d6\u6210\u529f",r)}));

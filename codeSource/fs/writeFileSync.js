@@ -1,0 +1,1 @@
+const fs=require("fs");try{fs.writeFileSync("example.txt","HELLO WORLD!")}catch(error){console.error("\u5199\u5165\u5931\u8d25",error)}

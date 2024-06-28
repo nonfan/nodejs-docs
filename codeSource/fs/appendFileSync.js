@@ -1,0 +1,1 @@
+const fs=require("fs");try{fs.appendFileSync("example.txt","HELLO WORLD!")}catch(error){console.error("\u8ffd\u52a0\u5931\u8d25",error)}

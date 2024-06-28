@@ -1,0 +1,1 @@
+const fs=require("fs");fs.writeFile("example.txt","HELLO WORLD!",(e=>{if(e)return console.err("\u5199\u5165\u5931\u8d25",e);console.log("\u5199\u5165\u6210\u529f")}));

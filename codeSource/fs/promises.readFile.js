@@ -1,0 +1,1 @@
+const fs=require("fs");(async()=>{try{const e=await fs.promises.readFile("example.txt","utf-8");console.log(e)}catch(e){console.error("\u8bfb\u53d6\u5931\u8d25",e)}})();

@@ -1,0 +1,1 @@
+const fs=require("fs");fs.unlink("example.txt",(e=>{if(e)return console.error("\u5220\u9664\u6587\u4ef6\u5931\u8d25",e);console.log("\u5220\u9664\u6210\u529f")}));

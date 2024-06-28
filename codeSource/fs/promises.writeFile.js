@@ -1,0 +1,1 @@
+const fs=require("fs");(async()=>{try{await fs.promises.writeFile("example.txt","HELLO WORLD!")}catch(e){console.error("\u5199\u5165\u5931\u8d25",e)}})();
