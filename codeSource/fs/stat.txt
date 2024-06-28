@@ -1,0 +1,32 @@
+const fs = require("fs");
+
+fs.stat("example.txt", (err, stats) => {
+  if (err) {
+    return console.error("读取状态失败", err);
+  }
+
+  console.log(stats);
+});
+
+/** 打印文件状态
+Stats {
+  dev: 16777230,
+  mode: 33188,
+  nlink: 1,
+  uid: 501,
+  gid: 20,
+  rdev: 0,
+  blksize: 4096,
+  ino: 11261821,
+  size: 12,
+  blocks: 8,
+  atimeMs: 1719563397151.043,
+  mtimeMs: 1719563396188.922,
+  ctimeMs: 1719563396188.922,
+  birthtimeMs: 1719563396188.904,
+  atime: 2024-06-28T08:29:57.151Z,
+  mtime: 2024-06-28T08:29:56.189Z,
+  ctime: 2024-06-28T08:29:56.189Z,
+  birthtime: 2024-06-28T08:29:56.189Z
+}
+ */

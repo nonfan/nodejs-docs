@@ -1,0 +1,8 @@
+const fs = require("fs");
+
+try {
+  fs.accessSync("example.txt");
+  console.log("有权限访问");
+} catch (error) {
+  console.error("描述为什么文件不可访问", err);
+}
