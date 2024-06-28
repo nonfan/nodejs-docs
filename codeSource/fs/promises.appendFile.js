@@ -1,1 +1,0 @@
-const fs=require("fs");(async()=>{try{await fs.promises.appendFile("example.txt","HELLO WORLD!")}catch(e){console.error("\u8ffd\u52a0\u5931\u8d25",e)}})();

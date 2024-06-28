@@ -1,1 +1,0 @@
-const fs=require("fs");try{fs.unlinkSync("example.txt"),console.log("\u5220\u9664\u6210\u529f")}catch(error){console.err("\u5220\u9664\u5931\u8d25",error)}

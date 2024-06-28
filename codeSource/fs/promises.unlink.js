@@ -1,1 +1,0 @@
-const fs=require("fs");(async()=>{try{await fs.promises.unlink("example.txt"),console.log("\u5220\u9664\u6210\u529f")}catch(s){console.error("\u5220\u9664\u5931\u8d25",s)}})();

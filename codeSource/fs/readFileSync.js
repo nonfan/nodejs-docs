@@ -1,1 +1,0 @@
-const fs=require("fs");try{const r=fs.readFileSync("example.js","utf-8");console.log("\u6210\u529f\u8bfb\u53d6",r)}catch(error){console.err("\u8bfb\u53d6\u5931\u8d25",error)}
