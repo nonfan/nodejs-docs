@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 try {
-  fs.chmodSync("example_holder", 0o755);
+  fs.chmodSync("example_folder", 0o755);
   console.log("更改文件权限成功!");
 } catch (err) {
   console.error("更改文件权限失败:", err);

@@ -5,7 +5,7 @@ const gid = 1000; // 假设新的所有者组 ID
 
 (async () => {
   try {
-    await fs.chown("example_holder", uid, gid);
+    await fs.chown("example_folder", uid, gid);
     console.log("更改文件所有权成功!");
   } catch (err) {
     console.error("更改文件所有权失败:", err);

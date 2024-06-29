@@ -1,0 +1,11 @@
+const fs = require('fs');
+
+const symlinkPath = 'example_symlink'; // 符号链接的路径
+
+try {
+  // 读取符号链接
+  const linkString = fs.readlinkSync(symlinkPath);
+  console.log('符号链接指向:', linkString);
+} catch (err) {
+  console.error('读取符号链接时出错:', err);
+}
