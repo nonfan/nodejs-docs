@@ -1,0 +1,9 @@
+const fs = require("fs");
+
+// 更改文件权限
+fs.chmod("example_holder", 0o755, (err) => {
+  if (err) {
+    return console.error("更改文件权限失败:", err);
+  }
+  console.log("更改文件权限成功!");
+});

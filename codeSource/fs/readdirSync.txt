@@ -1,0 +1,8 @@
+const fs = require("fs");
+
+try {
+  const files = fs.readdirSync("example_folder");
+  console.log("读取目录", files); // ['xxx_folder', 'xxx.txt']
+} catch (error) {
+  console.error("读取目录失败的原因", error);
+}

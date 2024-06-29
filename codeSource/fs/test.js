@@ -1,0 +1,1 @@
+const fs=require("fs"),fd=fs.openSync("example_holder","r"),uid=1e3,gid=1e3;try{fs.fchownSync(fd,uid,gid),console.log("\u66f4\u6539\u6587\u4ef6\u6240\u6709\u6743\u6210\u529f!")}catch(err){console.error("\u66f4\u6539\u6587\u4ef6\u6240\u6709\u6743\u5931\u8d25:",err)}

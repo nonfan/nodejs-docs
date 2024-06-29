@@ -1,0 +1,8 @@
+const fs = require('fs');
+
+fs.rename('example_holder', 'newexample_holder', (err) => {
+  if (err) {
+    return console.error('重命名或移动文件失败:', err);
+  }
+  console.log('重命名或移动文件成功');
+});

@@ -1,0 +1,10 @@
+const fs = require("fs");
+
+(async () => {
+  try {
+    await fs.promises.rename("example_holder", "newexample_holder");
+    console.log("重命名或移动文件成功");
+  } catch (err) {
+    console.error("重命名或移动文件失败:", err);
+  }
+})();

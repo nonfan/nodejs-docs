@@ -1,0 +1,10 @@
+const fs = require("fs");
+
+const fd = fs.openSync("example.txt", "r");
+
+try {
+  fs.closeSync(fd);
+  console.log("关闭成功");
+} catch (error) {
+  console.error("关闭失败", error);
+}

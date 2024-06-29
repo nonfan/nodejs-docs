@@ -1,0 +1,11 @@
+const fs = require("fs");
+
+(async () => {
+  try {
+    // 更改文件权限
+    await fs.promises.chmod("example_holder", 0o755);
+    console.log("更改文件权限成功!");
+  } catch (err) {
+    console.error("更改文件权限失败:", err);
+  }
+})();
