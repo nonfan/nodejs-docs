@@ -1,0 +1,10 @@
+const fs = require("fs");
+
+(async () => {
+  try {
+    const files = await fs.promises.readdir("example_folder");
+    console.log("读取目录", files); // ['xxx_folder', 'xxx.txt']
+  } catch (error) {
+    console.error("读取目录失败的原因", error);
+  }
+})();

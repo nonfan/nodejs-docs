@@ -1,0 +1,20 @@
+const fs = require("fs");
+
+fs.rm("example_folder", (err) => {
+  if (err) {
+    return console.error("删除目录失败的原因", err);
+  }
+
+  console.log("删除目录成功");
+});
+
+
+// 递归删除目录
+// default
+fs.rm("example_folder", { recursive: true }, (err) => {
+  if (err) {
+    return console.error("删除目录失败的原因", err);
+  }
+
+  console.log("删除目录成功");
+});

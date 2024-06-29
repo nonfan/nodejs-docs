@@ -1,0 +1,14 @@
+const fs = require("fs");
+
+// 获取文件描述符
+const fd = fs.openSync("example_holder", "r");
+
+const uid = 1000; // 假设新的所有者用户 ID
+const gid = 1000; // 假设新的所有者组 ID
+
+try {
+  fs.fchownSync(fd, uid, gid);
+  console.log("更改文件所有权成功!");
+} catch (err) {
+  console.error("更改文件所有权失败:", err);
+}

@@ -1,0 +1,10 @@
+const fs = require("fs");
+
+(async () => {
+  try {
+    await fs.promises.rm("example_folder");
+    console.log("删除成功");
+  } catch (error) {
+    console.error("删除目录失败", error);
+  }
+})();

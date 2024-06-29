@@ -1,0 +1,10 @@
+const fs = require("fs");
+
+(async () => {
+  try {
+    const fd = await fs.openSync("example.txt", "r");
+    console.log("文件描述符", fd);
+  } catch (error) {
+    console.error("文件打开失败", error);
+  }
+})();

@@ -1,0 +1,8 @@
+const fs = require("fs");
+
+try {
+  fs.rmSync("example_folder");
+  console.log("删除成功");
+} catch (error) {
+  console.error("删除目录失败", error);
+}

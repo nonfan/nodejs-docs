@@ -1,0 +1,17 @@
+const fs = require("fs");
+
+fs.mkdir("example_folder", (err) => {
+  if (err) {
+    return console.error("创建目录失败的原因", err.message);
+  }
+
+  console.log("创建成功");
+});
+
+// 创建多级目录
+fs.mkdir("example_folder", { recursive: true }, (err) => {
+  if (err) {
+    return console.error("创建目录失败的原因", err.message);
+  }
+  console.log("创建成功");
+});
