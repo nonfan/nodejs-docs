@@ -1,0 +1,18 @@
+const fs = require('fs');
+
+const path = 'example'; // 要监视的文件或目录
+
+// 监视文件或目录
+const watcher = fs.watch(path, { encoding: 'buffer' }, (eventType, filename) => {
+  if (filename) {
+    console.log(`文件发生了变化: ${filename.toString()}`);
+    console.log(`事件类型: ${eventType}`);
+  }
+});
+
+// 模拟一段时间后取消监视
+setTimeout(() => {
+  // 同步关闭
+  watcher.close();
+  console.log('文件监视已取消');
+}, 10000); // 10秒后取消监视

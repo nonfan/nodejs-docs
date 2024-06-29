@@ -1,0 +1,12 @@
+const fs = require('fs');
+
+const target = 'example_folder'; // 符号链接指向的目标文件或目录
+const path = 'example_symlink'; // 符号链接的路径
+
+// 创建符号链接
+fs.symlink(target, path, 'file', (err) => {
+  if (err) {
+    return console.error('创建符号链接时出错:', err);
+  }
+  console.log('符号链接创建成功!');
+});

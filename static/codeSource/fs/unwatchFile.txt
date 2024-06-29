@@ -1,0 +1,16 @@
+const fs = require('fs');
+
+const filePath = 'example'; // 要监视的文件
+
+const listener = (curr, prev) => {
+  // 监听函数
+};
+
+// 监视文件
+fs.watchFile(filePath, { interval: 1000 }, listener);
+
+// 取消特定监听器的监视
+fs.unwatchFile(filePath, listener);
+
+// 取消该文件的所有监听器
+// fs.unwatchFile(filePath);

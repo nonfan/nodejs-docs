@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 try {
-  fs.renameSync('example_holder', 'newexample_holder');
+  fs.renameSync('example_folder', 'newexample_folder');
   console.log('重命名或移动文件成功');
 } catch (err) {
   return console.error('重命名或移动文件失败:', err);

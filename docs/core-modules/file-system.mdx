@@ -657,13 +657,171 @@ File System（文件系统）模块（通常简称为 fs 模块）是 Node.js �
 ## 符号链接
 
 ### 创建符号链接
+
+`fs.symlink` 一系列函数用于创建符号链接（Symbolic Link）。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `target`
+
+    > 符号链接指向的目标文件或目录的路径。
+
+    `path`
+
+    > 符号链接的路径，即符号链接本身的存储位置。
+
+    `type`
+
+    > 符号链接的类型，可以是 'file'、'dir' 或 'junction'。在非 Windows 系统上，这个参数会被忽略。
+
+    `callback`
+
+    > 仅在异步版本中使用。回调函数，接收一个参数 `err` 对象，如果操作成功，则该对象为 `null`。
+
+    ```js title="用法"
+    fs.symlink(target, path, type, callback);
+    fs.symlinkSync(target, path, type);
+    fs.promises.symlink(target, path, type);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/symlink.txt"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/symlinkSync.txt"/>
+  </TabItem>
+  <TabItem value="Promise 示例">
+    <CodeDemo filePath="/codeSource/fs/promises.symlink.txt"/>
+  </TabItem>
+</Tabs>
+
+
 ### 读取符号链接
+
+`fs.readlink` 一系列函数用于读取符号链接的目标路径。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `path`
+
+    > 符号链接的路径，即符号链接本身的存储位置。
+
+    `callback`
+
+    > 仅在异步版本中使用。回调函数，接收两个参数：`err` 对象，如果操作成功，则该对象为 `null`。`linkString` 符号链接的目标路径。
+
+    ```js title="用法"
+    fs.readlink(path, callback);
+    const linkString = fs.readlinkSync(path);
+    const linkString = await fs.promises.readlink(path);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/readlink.txt"/>
+  </TabItem>
+  <TabItem value="同步示例">
+    <CodeDemo filePath="/codeSource/fs/readlinkSync.txt"/>
+  </TabItem>
+  <TabItem value="Promise 示例">
+    <CodeDemo filePath="/codeSource/fs/promises.readlink.txt"/>
+  </TabItem>
+</Tabs>
 
 ## 监视文件和目录
 
 ### 监视文件
+
+`fs.watchFile` 方法使用轮询来监视文件变化，它的优点是跨平台的一致性，但效率较低，适用于需要稳定监视单个文件的场景。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `filename`
+
+    > 要监视的文件路径。
+
+    <p className="optional">`options`</p>
+
+    - `persistent`：布尔值，指示是否应该持续运行进程（默认 true）。
+    - `interval`：指定轮询的时间间隔（以毫秒为单位，默认 5007 毫秒）。
+
+    `listener`
+
+    > 监听函数，接收两个参数：`curr` 表示文件的当前状态、`prev` 表示文件的之前状态。
+
+    ```js title="用法"
+    fs.watchFile(filename, options, listener);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/watchFile.txt"/>
+  </TabItem>
+</Tabs>
+
 ### 取消监视文件
+
+`fs.unwatchFile` 方法来取消对文件的监视。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `filename`
+
+    > 要取消监视的文件路径。
+
+    <p className="optional">`listener`</p>
+
+    > 要取消的特定监听器。如果未提供，则取消所有监听器。
+
+    ```js title="用法"
+    fs.unwatchFile(filename, listener);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/unwatchFile.txt"/>
+  </TabItem>
+</Tabs>
+
+
 ### 监视文件和目录的变化
+
+`fs.watch` 方法使用底层操作系统设施来监视文件和目录的变化。它的优点是能够监视目录中的新增文件和删除文件的操作，并且效率较高。
+
+<Tabs>
+  <TabItem value="语法">
+
+    `filename`
+
+    > 要监视的文件路径。
+
+    <p className="optional">`options`</p>
+
+    - `persistent`：布尔值，指示是否应该持续运行进程（默认 true）。
+    - `recursive`：布尔值，指示是否递归监视子目录（仅适用于 macOS 和 Windows）。
+    - `encoding`：指定传递给监听器的文件名的编码（默认 'utf8'）。
+
+    `listener`
+
+    > 监听函数，接收两个参数：
+
+    - `eventType` 表示事件类型，可能的值有 `rename` 和 `change`。删除和新建文件的事件类型是 `rename`，修改文件是 `change`
+    - `filename` 字符串或 `Buffer`，表示发生变化的文件名。
+
+    ```js title="用法"
+    const watcher = fs.watch(filename, options, listener);
+    ```
+
+  </TabItem>
+  <TabItem value="异步示例">
+    <CodeDemo filePath="/codeSource/fs/watch.txt"/>
+  </TabItem>
+</Tabs>
 
 
 ## 其他

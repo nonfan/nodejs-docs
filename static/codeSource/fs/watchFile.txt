@@ -1,0 +1,8 @@
+const fs = require('fs');
+
+const path = 'example.txt'; // 要监视的文件
+
+// 监视文件
+fs.watchFile(path, { interval: 1000 }, (curr, prev) => {
+  console.log(`文件修改时间: 当前 - ${curr.mtime}, 之前 - ${prev.mtime}`);
+});

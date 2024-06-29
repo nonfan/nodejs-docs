@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 // 获取文件描述符
-const fd = fs.openSync("example_holder", "r");
+const fd = fs.openSync("example_folder", "r");
 
 const uid = 1000; // 假设新的所有者用户 ID
 const gid = 1000; // 假设新的所有者组 ID
