@@ -1,1 +1,193 @@
 # Path 模块
+
+`path` 模块是 Node.js 的核心模块之一，提供了用于处理和转换文件路径的实用工具。
+
+## path.basename(p[, ext])
+
+返回路径的最后一部分。
+
+```js title="获取文件名"
+const path = require('path');
+
+const filePath = '/foo/bar/baz/xxx/aaa.html';
+console.log(path.basename(filePath)); // 输出 'aaa.html'
+
+// 去除后缀
+console.log(path.basename(filePath, '.html')); // 'aaa'
+console.log(path.basename(filePath, 'a.html')); // 'aa'
+```
+
+## path.dirname(path)
+
+返回路径的目录部分。
+
+```js
+const path = require('path');
+const filePath = '/foo/bar/baz/xxx/aaa.html';
+
+console.log(path.dirname(filePath)); // 输出 '/foo/bar/xxx/aaa'
+```
+
+## path.extname(path)
+
+返回路径中文件的扩展名部分，从最后一个 .（点）字符到路径字符串的末尾。
+
+```js
+const path = require('path');
+const filePath = '/foo/bar/baz/xxx/aaa.html';
+
+console.log(path.extname(filePath)); // 输出 '.html'
+```
+
+## path.parse(path)
+
+返回路径的对象。
+
+```js
+const path = require('path');
+const filePath = '/foo/bar/baz/xxx/aaa.html';
+
+console.log(path.parse(filePath));
+
+/*
+{
+  root: '/',
+  dir: '/foo/bar/baz/xxx',
+  base: 'aaa.html',
+  ext: '.html',
+  name: 'aaa'
+}
+ */
+```
+
+## path.format(pathObject)
+
+从对象中返回路径字符串。与 `path.parse` 相反。
+
+```js
+const path = require('path');
+const formattedPath = {
+  root: '/',
+  dir: '/foo/bar/baz/xxx',
+  base: 'aaa.html',
+  ext: '.html',
+  name: 'aaa',
+};
+
+console.log(path.format(formattedPath)); // '/foo/bar/baz/xxx/aaa.html'
+```
+
+## path.isAbsolute(path)
+
+判断路径是否为绝对路径。
+
+```js
+const path = require('path');
+
+console.log(path.isAbsolute('/foo/bar')); // 输出 true
+
+console.log(path.isAbsolute('./baz/xxx')); // 输出 false
+```
+
+## path.join([...paths])
+
+使用平台特定的分隔符将所有给定的路径片段连接在一起，并规范化生成的路径。
+
+```js
+const path = require('path');
+
+const joinedPath = path.join('/foo', 'bar', 'baz/xxx', 'aaa', '..');
+console.log(joinedPath); // 输出 '/foo/bar/baz/xxx'
+```
+
+## path.normalize(path)
+
+规范化给定的路径，解析 `..` 和 `.` 片段。
+
+```js
+const path = require('path');
+
+const normalizedPath = path.normalize('/foo/bar//baz/xxx/aaa/..');
+console.log(normalizedPath); // 输出 '/foo/bar/baz/xxx'
+```
+
+## path.relative(from, to)
+
+返回从 `from` 路径到 `to` 路径的相对路径。
+
+```js
+const path = require('path');
+
+const relativePath = path.relative(
+  '/data/apple/test/aaa',
+  '/data/banana/test/bbb',
+);
+console.log(relativePath); // 输出 '../../../banana/test/bbb'
+```
+
+## path.resolve([...paths])
+
+将路径或路径片段解析为绝对路径。它会从右到左处理路径片段，并在处理完所有给定的路径片段后返回一个绝对路径。生成的路径是规范化的，并删除了多余的斜杠和点（. 和 ..）片段
+
+```js
+const path = require('path');
+
+// 示例 1：单个相对路径
+const resolvedPath1 = path.resolve('foo/bar', 'baz');
+console.log(resolvedPath1);
+// 输出结果取决于当前工作目录，比如 '/current/working/directory/foo/bar/baz'
+
+// 示例 2：多个相对路径
+const resolvedPath2 = path.resolve('foo/bar', 'baz', '../qux');
+console.log(resolvedPath2);
+// 输出结果取决于当前工作目录，比如 '/current/working/directory/foo/bar/qux'
+
+// 示例 3：包含绝对路径
+const resolvedPath3 = path.resolve('/foo/bar', 'baz');
+console.log(resolvedPath3);
+// 输出 '/foo/bar/baz'
+
+// 示例 4：包含当前目录符号
+const resolvedPath4 = path.resolve('/foo/bar', './baz');
+console.log(resolvedPath4);
+// 输出 '/foo/bar/baz'
+
+// 示例 5：包含父目录符号
+const resolvedPath5 = path.resolve('/foo/bar', '../baz');
+console.log(resolvedPath5);
+// 输出 '/foo/baz'
+
+// 示例 6：多个路径片段
+const resolvedPath6 = path.resolve(
+  '/foo/bar',
+  'baz',
+  '/tmp/file',
+  '..',
+  'subfile',
+);
+console.log(resolvedPath6);
+// 输出 '/tmp/subfile'
+
+// 示例 7：如果没有绝对路径片段，将当前工作目录附加在前面
+const resolvedPath7 = path.resolve('foo', 'bar');
+console.log(resolvedPath7);
+// 输出结果取决于当前工作目录，比如 '/current/working/directory/foo/bar'
+```
+
+## \_\_dirname 和 \_\_filename
+
+在 Node.js 中，`__dirname` 和 `__filename` 是两个全局变量，用于获取当前模块的目录名和文件名。
+
+`__dirname` 返回当前模块文件所在目录的绝对路径。
+
+```js title="/Users/nonfan/项目/venv/serve.js"
+// server.js
+console.log(__dirname); // /Users/nonfan/项目/venv
+```
+
+`__filename` 返回当前模块文件的绝对路径。
+
+```js title="/Users/nonfan/项目/venv/serve.js"
+// server.js
+console.log(__filename); // /Users/nonfan/项目/venv/server.js
+```
